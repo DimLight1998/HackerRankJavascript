@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .button {
+            width: 25%;
+            height: 36px;
+            font-size: 18px;
+            margin: 0px;
+            float: left;
+        }
+
+        .digitButton {
+            background-color: lightgreen;
+            color: brown;
+        }
+
+        .cmdButton {
+            background-color: darkgreen;
+            color: white;
+        }
+
+        .oprButton {
+            background-color: black;
+            color: red;
+        }
+    </style>
+</head>
+
+<body style="width: 33%;">
+    <script>
+        let display = "";
+        let newInput = true;
+        function updateDisplay() { document.getElementById("res").innerHTML = display; }
+        function onBtn0Click() {
+            if (newInput) {
+                display = "0";
+                newInput = false;
+            } else display += "0";
+            updateDisplay();
+        }
+        function onBtn1Click() {
+            if (newInput) {
+                display = "1";
+                newInput = false;
+            } else display += "1";
+            updateDisplay();
+        }
+        function onBtnClrClick() { display = ""; newInput = true; updateDisplay(); }
+        function onBtnEqlClick() {
+            let re = /(\d+)([\+|-|\*|\/])(\d+)/;
+            let match = display.match(re);
+            let num1 = Number.parseInt(match[1], 2);
+            let num2 = Number.parseInt(match[3], 2);
+            let opr = match[2];
+            let res = null;
+            switch (opr) {
+                case "+":
+                    res = num1 + num2;
+                    break;
+                case "-":
+                    res = num1 - num2;
+                    break;
+                case "*":
+                    res = num1 * num2;
+                    break;
+                case "/":
+                    res = num1 / num2;
+                    break;
+            }
+            display = res.toString(2);
+            updateDisplay();
+            newInput = true;
+        }
+        function onBtnSumClick() { display += "+"; updateDisplay(); }
+        function onBtnSubClick() { display += "-"; updateDisplay(); }
+        function onBtnMulClick() { display += "*"; updateDisplay(); }
+        function onBtnDivClick() { display += "/"; updateDisplay(); }
+    </script>
+    <div id="res" style="background-color: lightgray; border: solid; height: 48px; font-size: 20px;">
+    </div>
+    <div id="btns">
+        <button id="btn0" class="button digitButton" onclick="onBtn0Click()">0</button>
+        <button id="btn1" class="button digitButton" onclick="onBtn1Click()">1</button>
+        <button id="btnClr" class="button cmdButton" onclick="onBtnClrClick()">C</button>
+        <button id="btnEql" class="button cmdButton" onclick="onBtnEqlClick()">=</button>
+        <button id="btnSum" class="button oprButton" onclick="onBtnSumClick()">+</button>
+        <button id="btnSub" class="button oprButton" onclick="onBtnSubClick()">-</button>
+        <button id="btnMul" class="button oprButton" onclick="onBtnMulClick()">*</button>
+        <button id="btnDiv" class="button oprButton" onclick="onBtnDivClick()">/</button>
+    </div>
+</body>
+
+</html>
